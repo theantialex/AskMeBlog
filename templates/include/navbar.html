@@ -1,0 +1,27 @@
+{% load static %}
+<header>
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand web-name" href="{% url 'main' %}">AskMe</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            </form>
+        </ul>
+      </div>
+      <div class="nav-btn">
+      <a href="{% url 'ask' %}"><button class="btn my-btn" type="button">Ask!</button></a>
+      </div>
+      <div class = "nav-img"><img src="{{ user.avatar.url }}"></div>
+      <div class="row pf-name">{{ user.username }}</div>
+      <div class="row">
+        <a href="{% url 'settings' %}" style="color:cornsilk">settings</a>
+        <a href="{% url 'login' %}" style="color:cornsilk">log out</a>
+      </div>
+    </div>
+  </nav>
+</header>

@@ -1,0 +1,31 @@
+{% load static %}
+<div class="row question">
+    <div class="col-2">
+        <div>
+            <img src="{{ question.author.avatar.url }}">
+        </div>
+        <div class = "like">
+            <i class="arrow up"></i>
+            {% if question.like_sum %}
+            <div class = "vote">{{ question.like_sum }}</div>
+            {% else %}
+            <div class = "vote">{{ 0 }}</div>
+            {% endif %}
+            <i class="arrow down"></i>
+        </div>
+    </div>
+    <div class="col-10">
+        <a href="{% url 'one_question' pk=question.id %}"><h2>{{ question.title }}</h2></a>
+        <span class= "author">Author: {{ question.author.user.username }}</span>
+        <span class= "date">{{ question.date }}</span>
+        <div class= "text q-text">{{ question.text }}</div>
+        <div class="bottom-ans">
+        <a href="{% url 'one_question' pk=question.id %}">answer <span class="ans-count">({{ question.answers.all.count }})</span></a>
+        <span class="tags">Tags:
+            {% for tag in question.tags.all %}
+            <a href="{% url 'tagged_questions' str=tag %}">{{ tag }}</a>
+            {% endfor %}
+        </span>
+        </div>
+    </div>
+</div>

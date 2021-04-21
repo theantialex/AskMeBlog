@@ -1,0 +1,23 @@
+{% extends 'include/base.html' %}
+{% load static %}
+
+{% block title %}Main page{% endblock title %}
+
+{% block before_content %}
+<div class="col-4 q-title"><h1>New Questions</h1></div>
+<div class="col-4"><a id = "q-link" href="{% url 'hot' %}">Hot Questions</a></div>
+{% endblock before_content %}
+
+{% block content %}
+{% for question in object_list %}
+    {% include "include/question.html" %}
+{% endfor %}
+{% endblock content %}
+
+{% block navigation %}
+{% include "include/paginator.html" %}
+{% endblock navigation %}
+
+{% block side %}
+{% include "include/side.html" %}
+{% endblock side %}

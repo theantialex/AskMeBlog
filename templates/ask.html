@@ -1,0 +1,29 @@
+{% extends 'include/base.html' %}
+{% load static %}
+{% block title %}Ask{% endblock title %}
+
+{% block content %}
+<div class="col-4 q-title">
+    <h2>New&nbspQuestion</h2>
+</div>
+
+<div class="ask mb-3">
+    <label class="form-label">Title</label>
+    <input type="text" class="form-control" placeholder="Enter title here">
+</div>
+<div class="mb-3">
+    <label class="form-label">Text</label>
+    <textarea class="form-control" rows="5" placeholder="Enter text here"></textarea>
+</div>
+<div class="mb-3">
+    <label class="form-label">Tags</label>
+    <input type="text" class="form-control" placeholder="Tag1, tag2, tag3">
+</div>
+<div class="form-btn">
+    <button class="btn my-btn" type="submit">Confirm!</button>
+</div>
+{% endblock content %}
+
+{% block side %}
+{% include "include/side.html" %}
+{% endblock side %}

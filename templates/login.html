@@ -1,0 +1,29 @@
+{% extends 'include/base.html' %}
+{% load static %}
+
+{% block title %}Log in{% endblock title %}
+
+{% block content %}
+<div class="col-4 q-title">
+    <h1>Log in</h1>
+</div>
+
+{% if alert %}
+    <div class="alert alert-danger" role="alert">
+        A simple danger alert—check it out!
+    </div>
+{% endif %}
+
+<form class="login">
+    <div class="mb-3">
+        <label class="form-label">Login</label>
+        <input type="text" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Password</label>
+        <input type="password" class="form-control">
+    </div>
+    <button type="submit" class="btn my-btn">Log in</button>
+    <a class= "create_url" href="{% url 'signup' %}">create new account</a>
+</form>
+{% endblock content %}

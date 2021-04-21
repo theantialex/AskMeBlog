@@ -1,0 +1,16 @@
+<div class="pop-tags">
+    <h2 class="title-content">Popular tags:</h2>
+        <div class="tag-list">
+            {% for tag in popular_tags %}
+            <a class="tag-item" style="color:{{ tag.color }}" href="{% url 'tagged_questions' str=tag.name %}">{{ tag.name }}</a>
+            {% endfor %}
+        </div>
+</div>
+<div class = "members">
+    <h2>Best members:</h2>
+    <div class="mem-list">
+        {% for member in members %}
+        <span class="mem-item">{{ member }}</span>
+        {% endfor %}
+    </div>
+</div>

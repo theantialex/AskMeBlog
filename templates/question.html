@@ -1,0 +1,29 @@
+{% extends 'include/base.html' %}
+{% load static %}
+
+{% block title %}Question{% endblock title %}
+
+{% block content %}
+
+{% include "include/question.html" %}
+
+{% for answer in object_list %}
+    {% include "include/answer.html" %}
+{% endfor %}
+
+<div class="mb-3">
+    <textarea class="form-control" rows="4" placeholder="Enter your answer here"></textarea>
+</div>
+<div class="form-btn answer-btn">
+    <button class="btn my-btn" type="submit">Answer</button>
+</div>
+
+{% endblock content %}
+
+{% block navigation %}
+{% include "include/paginator.html" %}
+{% endblock navigation %}
+
+{% block side %}
+{% include "include/side.html" %}
+{% endblock side %}
