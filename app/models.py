@@ -24,7 +24,7 @@ class Question(models.Model):
     text = models.TextField()
     date = models.DateField()
     author = models.ForeignKey('Profile', on_delete=models.CASCADE, related_name='questions')
-    tags = models.ManyToManyField('Tag', related_name='questions')
+    tags = models.ManyToManyField('Tag', related_name='questions', blank=True)
     objects = QuestionManager()
 
     def __str__(self):
@@ -44,7 +44,7 @@ class Answer(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.ImageField(upload_to='static/img')
+    avatar = models.ImageField()
 
     def __str__(self):
         return self.user.__str__()
