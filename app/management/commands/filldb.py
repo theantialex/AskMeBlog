@@ -17,8 +17,9 @@ class Command(BaseCommand):
 
     def fill_profiles(self, cnt):
         for i in range(cnt):
+            #profile = fake.unique.simple_profile()
             Profile.objects.create(
-                user__username=fake.unique.simple_profile().username,
+                user__username=fake.unique.pystr(8, 16),
                 user__password=fake.pystr(8, 16),
                 avatar=choice(self.avatar_list)
             )
@@ -41,7 +42,7 @@ class Command(BaseCommand):
     def fill_tags(self, cnt):
         for i in range(cnt):
             Tag.objects.create(
-                name=fake.word(),
+                name=fake.unique.word(),
             )
 
     def handle(self, *args, **options):
