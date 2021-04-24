@@ -18,6 +18,7 @@ class Command(BaseCommand):
 
     def fill_profiles(self, cnt):
         usernames = set()
+        profiles = []
         for i in range(cnt):
             username = fake.simple_profile().get('username')
             while username in usernames:
@@ -26,11 +27,13 @@ class Command(BaseCommand):
                 username=username,
                 password=fake.password(length=9, special_chars=True)
             )
-            Profile.objects.create(
+            profiles.append(Profile(
                 user_id=user.id,
                 avatar=choice(self.avatar_list)
-            )
+            ))
             usernames.add(username)
+
+        Profile.objects.bulk_create(profiles)
 
     def fill_questions(self, cnt):
         author_ids = list(
@@ -43,14 +46,17 @@ class Command(BaseCommand):
                 'id', flat=True
             )
         )
+        questions = []
         for i in range(cnt):
-            q = Question(
+            questions.append(Question(
                 author_id=choice(author_ids),
                 text=' '.join(fake.sentences(fake.random_int(min=5, max=15))),
                 title=fake.sentence()[:-1] + '?',
                 date=fake.date_between(start_date='-1y', end_date='today'),
-            )
-            q.save()
+            ))
+
+        Question.objects.bulk_create(questions)
+        for q in Question.objects.all():
             tag1 = Tag.objects.get(id=choice(tags_ids))
             tag2 = Tag.objects.get(id=choice(tags_ids))
             if tag1 != tag2:
@@ -60,16 +66,18 @@ class Command(BaseCommand):
 
     def fill_tags(self, cnt):
         tags = set()
+        tags_list = []
         for i in range(cnt):
             tag = fake.word()
             while tag in tags:
                 tag += '_' + fake.word()
                 if len(tag) > 49:
                     tag = fake.pystr(min_chars=2, max_chars=15)
-            Tag.objects.create(
+            tags_list.append(Tag(
                 name=tag,
-            )
+            ))
             tags.add(tag)
+        Tag.objects.bulk_create(tags_list)
 
     def fill_answers(self, cnt):
         author_ids = list(
@@ -82,14 +90,16 @@ class Command(BaseCommand):
                 'id', flat=True
             )
         )
+        answers = []
         for i in range(cnt):
             question_id = choice(questions_ids)
-            Answer.objects.create(
+            answers.append(Answer(
                 text=' '.join(fake.sentences(fake.random_int(min=5, max=10))),
                 author_id=choice(author_ids),
                 question_id=question_id,
                 date=Question.objects.get(id=question_id).date
-            )
+            ))
+        Answer.objects.bulk_create(answers)
 
     def fill_question_likes(self, cnt):
         LIKE_CHOICES = ['1', '-1']
@@ -103,12 +113,15 @@ class Command(BaseCommand):
                 'id', flat=True
             )
         )
+        question_likes = []
         for i in range(cnt):
-            QuestionLike.objects.create(
+            question_likes.append(QuestionLike(
                 like=choice(LIKE_CHOICES),
                 author_id=choice(author_ids),
                 question_id=choice(questions_ids)
-            )
+            ))
+
+        QuestionLike.objects.bulk_create(question_likes)
 
     def fill_answer_likes(self, cnt):
         LIKE_CHOICES = ['1', '-1']
@@ -122,16 +135,18 @@ class Command(BaseCommand):
                 'id', flat=True
             )
         )
+        answers_likes = []
         for i in range(cnt):
-            AnswerLike.objects.create(
+            answers_likes.append(AnswerLike(
                 like=choice(LIKE_CHOICES),
                 author_id=choice(author_ids),
                 answer_id=choice(answers_ids)
-            )
+            ))
+        AnswerLike.objects.bulk_create(answers_likes)
 
     def handle(self, *args, **options):
         if options['db_size'] == 'large':
-            sizes = [10001, 11000, 100001, 1000001, 450000, 600000]
+            sizes = [10001, 11000, 100001, 1000001, 900000, 1200000]
         elif options['db_size'] == 'medium':
             sizes = [50, 100, 120, 250, 180, 300]
         else:
