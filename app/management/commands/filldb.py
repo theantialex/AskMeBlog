@@ -9,8 +9,9 @@ fake = Faker()
 class Command(BaseCommand):
     help = 'Fills database with fake data'
 
-    avatar_list = ['1.png', '2.jpeg', '3.jpg', '4.jpg', '5.jpg',
-                   '5.jpg', '6.jpg']
+    avatar_list = ['1.png', '2.jpeg', '3.jpg', '4.jpg', '5.jpg', '5.jpg', '6.jpg', '7.jpeg',
+                   '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.png',
+                   '16.jpg', '17.jpg', '18.jpg', '19.jpg']
 
     def add_arguments(self, parser):
         parser.add_argument('--db_size', default='small', type=str, help='The size of database data to create.')
@@ -45,7 +46,7 @@ class Command(BaseCommand):
         for i in range(cnt):
             q = Question(
                 author_id=choice(author_ids),
-                text='. '.join(fake.sentences(fake.random_int(min=5, max=15))),
+                text=' '.join(fake.sentences(fake.random_int(min=5, max=15))),
                 title=fake.sentence()[:-1] + '?',
                 date=fake.date_between(start_date='-1y', end_date='today'),
             )
@@ -58,10 +59,17 @@ class Command(BaseCommand):
                 q.tags.add(tag1)
 
     def fill_tags(self, cnt):
+        tags = set()
         for i in range(cnt):
+            tag = fake.word()
+            while tag in tags:
+                tag += '_' + fake.word()
+                if len(tag) > 49:
+                    tag = fake.pystr(min_chars=2, max_chars=15)
             Tag.objects.create(
-                name=fake.unique.word(),
+                name=tag,
             )
+            tags.add(tag)
 
     def fill_answers(self, cnt):
         author_ids = list(
@@ -77,7 +85,7 @@ class Command(BaseCommand):
         for i in range(cnt):
             question_id = choice(questions_ids)
             Answer.objects.create(
-                text='. '.join(fake.sentences(fake.random_int(min=5, max=10))),
+                text=' '.join(fake.sentences(fake.random_int(min=5, max=10))),
                 author_id=choice(author_ids),
                 question_id=question_id,
                 date=Question.objects.get(id=question_id).date
