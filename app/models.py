@@ -19,6 +19,16 @@ class AnswerManager(models.Manager):
         return self.prefetch_related('likes', 'author').filter(question__id=pk).annotate(like_sum=Sum('likes__like'))
 
 
+class TagManager(models.Manager):
+    def popular(self):
+        return self.annotate(count=Count('questions')).order_by('-count')
+
+
+class ProfileManager(models.Manager):
+    def best(self):
+        return self.annotate(count=Count('answers')).order_by('-count')
+
+
 class Question(models.Model):
     title = models.CharField(max_length=255)
     text = models.TextField()
@@ -45,6 +55,7 @@ class Answer(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     avatar = models.ImageField()
+    objects = ProfileManager()
 
     def __str__(self):
         return self.user.__str__()
@@ -72,6 +83,7 @@ class AnswerLike(models.Model):
 
 class Tag(models.Model):
     name = models.CharField(max_length=50, unique=True)
+    objects = TagManager()
 
     def __str__(self):
         return self.name

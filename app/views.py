@@ -3,8 +3,8 @@ from django.core.paginator import Paginator
 from django.template import RequestContext
 from .models import *
 
-members = Profile.objects.all()[:5]
-popular_tags = Tag.objects.values('name').distinct()[:5]
+members = Profile.objects.best()[:5]
+popular_tags = Tag.objects.popular()[:5]
 alert = ""
 user = Profile.objects.all()[0]
 
