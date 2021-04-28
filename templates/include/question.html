@@ -6,8 +6,8 @@
         </div>
         <div class = "like">
             <i class="arrow up"></i>
-            {% if question.like_sum %}
-            <div class = "vote">{{ question.like_sum }}</div>
+            {% if question.rating %}
+            <div class = "vote">{{ question.rating }}</div>
             {% else %}
             <div class = "vote">{{ 0 }}</div>
             {% endif %}

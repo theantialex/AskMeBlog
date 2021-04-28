@@ -5,13 +5,13 @@ from django.db.models import Sum, Count
 
 class QuestionManager(models.Manager):
  def popular(self):
-     return self.prefetch_related('likes', 'author').annotate(like_sum=Sum('likes__like')).order_by('-like_sum')
+     return self.prefetch_related('likes', 'author').order_by('-rating')
 
  def new(self):
-     return self.prefetch_related('likes', 'author').annotate(like_sum=Sum('likes__like')).order_by('-date')
+     return self.prefetch_related('likes', 'author').order_by('-date')
 
  def tagged(self, str):
-     return self.prefetch_related('likes', 'author').filter(tags__name=str).annotate(like_sum=Sum('likes__like'))
+     return self.prefetch_related('likes', 'author').filter(tags__name=str)
 
 
 class AnswerManager(models.Manager):
@@ -32,7 +32,8 @@ class ProfileManager(models.Manager):
 class Question(models.Model):
     title = models.CharField(max_length=255)
     text = models.TextField()
-    date = models.DateField()
+    date = models.DateField(db_index=True)
+    rating = models.IntegerField(default=0, db_index=True)
     author = models.ForeignKey('Profile', on_delete=models.CASCADE, related_name='questions')
     tags = models.ManyToManyField('Tag', related_name='questions', blank=True)
     objects = QuestionManager()

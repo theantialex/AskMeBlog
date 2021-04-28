@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand
 from app.models import *
+from django.db.models import F
 from random import choice
 from faker import Faker
 
@@ -115,11 +116,14 @@ class Command(BaseCommand):
         )
         question_likes = []
         for i in range(cnt):
+            question_id = choice(questions_ids)
+            like = choice(LIKE_CHOICES)
             question_likes.append(QuestionLike(
-                like=choice(LIKE_CHOICES),
+                like=like,
                 author_id=choice(author_ids),
-                question_id=choice(questions_ids)
+                question_id=question_id
             ))
+            Question.objects.get(id=question_id).update(rating=F('rating') + like)
 
         QuestionLike.objects.bulk_create(question_likes)
 
@@ -144,6 +148,17 @@ class Command(BaseCommand):
             ))
         AnswerLike.objects.bulk_create(answers_likes)
 
+    def fill_rating(self):
+        questions_ids = list(
+            Question.objects.values_list(
+                'id', flat=True
+            )
+        )
+        for id in questions_ids:
+            rating = QuestionLike.objects.filter(question_id=id).aggregate(sum=Sum('like'))
+            if rating['sum']:
+                Question.objects.filter(id=id).update(rating=rating['sum'])
+
     def handle(self, *args, **options):
         if options['db_size'] == 'large':
             sizes = [10001, 11000, 100001, 1000001, 900000, 1200000]
@@ -158,3 +173,4 @@ class Command(BaseCommand):
         self.fill_answers(sizes[3])
         self.fill_question_likes(sizes[4])
         self.fill_answer_likes(sizes[5])
+        # self.fill_rating()
