@@ -47,6 +47,7 @@ class Answer(models.Model):
     date = models.DateField()
     author = models.ForeignKey('Profile', on_delete=models.CASCADE, related_name='answers')
     question = models.ForeignKey('Question', on_delete=models.CASCADE, related_name='answers')
+    checked = models.BooleanField(default=False)
     objects = AnswerManager()
 
     def __str__(self):

@@ -1,34 +1,22 @@
 {% extends 'include/base.html' %}
 {% load static %}
-
+{% load bootstrap4 %}
 {% block title %}Settings{% endblock title %}
 
 {% block align %}{% endblock align %}
-{% block content_align %}<div class="center">{% endblock content_align %}
 
 {% block content %}
-<div class="col-4 title-content">
+<div class="col-4 title-content center">
     <span class="settings">Settings:<span id="pf-name"> Alexandra</span></span>
 </div>
 
-<form class="signup">
-    <div class="mb-3">
-        <label class="form-label">Login</label>
-        <input type="text" class="form-control signup-input" id="set-login" value="antialex">
-    </div>
-    <div class="mb-3">
-        <label for="set-email" class="form-label">Email address</label>
-        <input type="email" class="form-control signup-input" id="set-email" value="saxara@mail.ru" aria-describedby="emailHelp">
-        <div id="emailHelp" class="form-text">At least 6 symbols</div>
-    </div>
-    <div class="mb-3">
-        <label class="form-label">Nickname</label>
-        <input type="text" class="form-control signup-input" id="set-nick" value="Sasha">
-    </div>
-    <div class="pfp"><p class="file">Upload avatar:</p><img src="{% static 'img/7.jpeg' %}"></div>
-    <div class="input-group mb-3">
-        <input type="file" class="form-control signup-input" id="inputGroupFile01">
-    </div>
+<form class="signup center" enctype="multipart/form-data" action="/settings/" method="post">
+            {% csrf_token %}
+        <div class="mb-3">
+    {% bootstrap_form form %}
+        </div>
+    {% buttons %}
     <button type="submit" class="btn my-btn">Save</button>
+    {% endbuttons %}
 </form>
 {% endblock content %}

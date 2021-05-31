@@ -102,6 +102,7 @@ class Command(BaseCommand):
             ))
         Answer.objects.bulk_create(answers)
 
+
     def fill_question_likes(self, cnt):
         LIKE_CHOICES = ['1', '-1']
         questions_ids = list(

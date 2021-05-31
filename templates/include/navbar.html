@@ -16,12 +16,19 @@
       <div class="nav-btn">
       <a href="{% url 'ask' %}"><button class="btn my-btn" type="button">Ask!</button></a>
       </div>
-      <div class = "nav-img"><img src="{{ user.avatar.url }}"></div>
-      <div class="row pf-name">{{ user.username }}</div>
+      {% if request.user.is_authenticated %}
+      <div class = "nav-img"><img src="{{ request.user.profile.avatar.url }}"></div>
+      <div class="row pf-name">{{ request.user.username }}</div>
       <div class="row">
         <a href="{% url 'settings' %}" style="color:cornsilk">settings</a>
-        <a href="{% url 'login' %}" style="color:cornsilk">log out</a>
+        <a href="{% url 'logout' %}" style="color:cornsilk">log out</a>
       </div>
+      {% else %}
+      <div class="row">
+        <a href="{% url 'signup' %}" style="color:white">register</a>
+        <a href="{% url 'login' %}" style="color:white">log in</a>
+      </div>
+      {% endif %}
     </div>
   </nav>
 </header>

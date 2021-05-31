@@ -1,48 +1,29 @@
 {% extends 'include/base.html' %}
 {% load static %}
+{% load bootstrap4 %}
 
 {% block title %}Register{% endblock title %}
 
 {% block align %}{% endblock align %}
-{% block content_align %}<div class="center">{% endblock content_align %}
 
 {% block content %}
-<div class="col-4 q-title">
+<div class="col-4 q-title center">
     <h1 class="title-content">Register</h1>
 </div>
 
 {% if alert %}
-    <div class="alert alert-danger" role="alert">
-        A simple danger alert—check it out!
+    <div class="alert alert-danger center" role="alert">
+        {{ alert }}
     </div>
 {% endif %}
 
-<form class="signup">
+<form class="signup center"  enctype="multipart/form-data" action="/signup/" method="post">
+            {% csrf_token %}
     <div class="mb-3">
-        <label class="form-label">Login</label>
-        <input type="text" class="form-control signup-input">
+         {% bootstrap_form form %}
     </div>
-    <div class="mb-3">
-        <label class="form-label">Email address</label>
-        <input type="email" class="form-control signup-input" aria-describedby="emailHelp">
-        <div id="emailHelp" class="form-text">At least 6 symbols</div>
-    </div>
-    <div class="mb-3">
-        <label class="form-label">Nickname</label>
-        <input type="text" class="form-control signup-input">
-    </div>
-    <div class="mb-3">
-        <label class="form-label">Password</label>
-        <input type="password" class="form-control signup-input">
-    </div>
-    <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">Repeat password</label>
-        <input type="password" class="form-control signup-input" id="exampleInputPassword1">
-    </div>
-    <div class="mb-3">
-        <label  class="form-label">Upload avatar:</label>
-        <input type="file" class="form-control signup-input">
-    </div>
+    {% buttons %}
     <button type="submit" class="btn my-btn">Sign up</button>
+    {% endbuttons %}
 </form>
 {% endblock content %}

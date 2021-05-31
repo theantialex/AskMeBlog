@@ -215,10 +215,13 @@ font-weight:bold;
     margin-top:20px;
 }
 .center {
-    margin-left:30%;
+    margin-left:40%;
 }
 .mem-item{
     font-size:20px;
     display:block;
     margin-top:20px;
+}
+.check-text {
+    color:red;
 }

@@ -30,8 +30,14 @@ urlpatterns = [
     path('login/', views.login, name='login'),
     path('signup/', views.signup, name='signup'),
     path('ask/', views.ask, name='ask'),
-    path('settings/', views.settings, name='settings')
-]
+    path('settings/', views.settings, name='settings'),
+    path('logout/', views.logout, name='logout'),
+    path('answer/', views.answer, name='answer'),
+    path('qvote/', views.qvote, name='qvote'),
+    path('avote/', views.avote, name='avote'),
+    path('check/', views.check, name='check')
 
-urlpatterns += staticfiles_urlpatterns()
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+if settings.DEBUG == True:
+    urlpatterns += staticfiles_urlpatterns()
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

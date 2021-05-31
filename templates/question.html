@@ -4,19 +4,22 @@
 {% block title %}Question{% endblock title %}
 
 {% block content %}
-
 {% include "include/question.html" %}
 
 {% for answer in object_list %}
     {% include "include/answer.html" %}
 {% endfor %}
 
+<form class="answer" action="/answer/" method="post">
+    {% csrf_token %}
 <div class="mb-3">
-    <textarea class="form-control" rows="4" placeholder="Enter your answer here"></textarea>
+    <input type="hidden" name="pk" value="{{ question.id }}" />
+    <textarea name="text" class="form-control" rows="4" placeholder="Enter your answer here"></textarea>
 </div>
 <div class="form-btn answer-btn">
     <button class="btn my-btn" type="submit">Answer</button>
 </div>
+</form>
 
 {% endblock content %}
 

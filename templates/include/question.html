@@ -5,13 +5,13 @@
             <img src="{{ question.author.avatar.url }}">
         </div>
         <div class = "like">
-            <i class="arrow up"></i>
+            <a href="#" class="js-vote arrow up js-{{ question.id }}" data-action="like" data-qid="{{ question.pk }}"></a>
             {% if question.rating %}
-            <div class = "vote">{{ question.rating }}</div>
+            <div class = "vote q-{{ question.id }}">{{ question.rating }}</div>
             {% else %}
-            <div class = "vote">{{ 0 }}</div>
+            <div class = "vote q-{{ question.id }}">{{ 0 }}</div>
             {% endif %}
-            <i class="arrow down"></i>
+            <a href="#" class="js-vote arrow down js-{{ question.id }}" data-action="dislike" data-qid="{{ question.pk }}"></a>
         </div>
     </div>
     <div class="col-10">
