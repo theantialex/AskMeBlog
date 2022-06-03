@@ -172,6 +172,6 @@ class Command(BaseCommand):
         self.fill_tags(sizes[1])
         self.fill_questions(sizes[2])
         self.fill_answers(sizes[3])
-        self.fill_question_likes(sizes[4])
-        self.fill_answer_likes(sizes[5])
+       # self.fill_question_likes(sizes[4])
+       # self.fill_answer_likes(sizes[5])
         # self.fill_rating()
